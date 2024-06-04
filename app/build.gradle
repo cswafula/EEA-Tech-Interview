@@ -2,19 +2,23 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlinx-serialization'
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.engie.eea_tech_interview"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildTypes {
@@ -24,32 +28,76 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.1'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    namespace 'com.engie.eea_tech_interview'
 }
 
 dependencies {
 
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.1'
+    implementation 'androidx.activity:activity-compose:1.9.0'
+    implementation platform('androidx.compose:compose-bom:2023.08.00')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.compose.material3:material3'
+    androidTestImplementation platform('androidx.compose:compose-bom:2023.08.00')
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
     def retrofitVersion = '2.9.0'
-    def moshiVersion = '1.13.0'
 
     implementation "androidx.appcompat:appcompat:1.5.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     testImplementation 'junit:junit:4.13.2'
 
+    //koin DI
     implementation "io.insert-koin:koin-android:3.2.0"
+
+    //Retrofit
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+
+    //okhttp
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
+
     implementation "androidx.multidex:multidex:2.0.1"
-    implementation "com.squareup.moshi:moshi:${moshiVersion}"
-    implementation "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}"
 
     def lifecycle_version = "2.4.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel:${lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle_version}"
+
+    //compose viewModels
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
+
+    //compose navigation
+    implementation("androidx.navigation:navigation-compose:2.8.0-alpha08")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+    //gson
+    implementation "com.google.code.gson:gson:2.10.1"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 }
