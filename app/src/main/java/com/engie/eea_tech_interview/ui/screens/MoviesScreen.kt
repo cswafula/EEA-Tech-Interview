@@ -85,6 +85,8 @@ fun MoviesScreen(navigation: NavHostController) {
             .testTag("Main Column")
     ) {
 
+        VerticalSpacer()
+
         AnimatedVisibility(!showSearchView.value) {
             Column {
                 Row(

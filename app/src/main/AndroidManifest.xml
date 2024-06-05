@@ -18,8 +18,8 @@
         <activity
             android:name=".ui.MoviesActivity"
             android:exported="true"
-            android:label="@string/title_activity_movies"
-            android:theme="@style/Theme.EEATechInterview">
+            android:theme="@style/Theme.EEATechInterview"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
