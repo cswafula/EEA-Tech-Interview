@@ -113,4 +113,8 @@ dependencies {
     //lottie animation
     implementation "com.airbnb.android:lottie-compose:6.0.0"
 
+
+    //Compose tests
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.7")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
 }

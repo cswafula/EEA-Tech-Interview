@@ -1,9 +1,7 @@
 package com.engie.eea_tech_interview.network.repositories
 
-import com.engie.eea_tech_interview.model.GenreResult
 import com.engie.eea_tech_interview.model.Movie
 import com.engie.eea_tech_interview.model.SearchResult
-import com.engie.eea_tech_interview.network.NetworkUtils
 import com.engie.eea_tech_interview.network.api.MovieApiService
 import com.engie.eea_tech_interview.network.apiRepository.MoviesApiRepository
 import com.engie.eea_tech_interview.viewModel.LoadingState
@@ -20,10 +18,6 @@ class MoviesRepository(private val movieApiService: MovieApiService): MoviesApiR
         )
     }
 
-    override suspend fun getGenres(): Response<GenreResult> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun getMoviesList(page: Int): Flow<LoadingState<List<Movie>>> {
         return flow {
             emit(LoadingState.ShowLoading(true))
@@ -38,10 +32,5 @@ class MoviesRepository(private val movieApiService: MovieApiService): MoviesApiR
             emit(LoadingState.Error(error = "Error Loading Movies"))
         }
     }
-
-    override suspend fun getMovie(id: Int): Flow<LoadingState<Movie>> {
-        TODO("Not yet implemented")
-    }
-
 
 }

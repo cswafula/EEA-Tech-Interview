@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -52,13 +53,7 @@ import com.engie.eea_tech_interview.ui.widgets.VerticalSpacer
 fun MovieCard(movie: Movie, onCardClicked: (movie: Movie) -> Unit) {
 
     val movieRating = if(movie.adult) "R" else "PG"
-
-    val imageState = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(NetworkUtils.IMAGES_BASE_URL.plus(movie.posterPath))
-            .size(Size.ORIGINAL)
-            .build()
-    ).state
+    val imageUrl = NetworkUtils.IMAGES_BASE_URL.plus(movie.posterPath)
 
     Card(
         modifier = Modifier
@@ -78,28 +73,11 @@ fun MovieCard(movie: Movie, onCardClicked: (movie: Movie) -> Unit) {
             modifier = Modifier.heightIn(min = 200.dp, max = 250.dp)
         ) {
 
-            when(imageState){
-                is AsyncImagePainter.State.Success -> {
-                    Image(
-                        painter = imageState.painter,
-                        contentDescription = movie.title,
-                        contentScale = ContentScale.Crop)
-                }
-                else ->{
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(greyBackground),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Icon(
-                            imageVector = Icons.Rounded.ImageNotSupported,
-                            contentDescription = movie.title
-                        )
-                    }
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = movie.title,
+                contentScale = ContentScale.Crop)
 
-                }
-            }
 
             Box(
                 modifier = Modifier

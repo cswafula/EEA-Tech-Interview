@@ -6,10 +6,11 @@ import com.engie.eea_tech_interview.navigation.MovieDetails
 fun Movie.toMovieNavigation() : MovieDetails {
     return MovieDetails(
         isAdult = adult,
-        posterPath = posterPath ?: "",
-        overview = overview ?: "",
-        backdropPath = backdropPath ?: "",
-        title = title ?: "",
+        posterPath = posterPath,
+        overview = overview,
+        backdropPath = backdropPath,
+        releaseDate = releaseDate,
+        title = title,
         voteAverage = voteAverage.toString(),
         voteCount = voteCount
     )

@@ -12,7 +12,5 @@ import retrofit2.Response
 interface MoviesApiRepository {
 
     suspend fun searchMovies(query: String) : Response<SearchResult>
-    suspend fun getGenres(): Response<GenreResult>
     suspend fun getMoviesList(page: Int) : Flow<LoadingState<List<Movie>>>
-    suspend fun getMovie(id: Int): Flow<LoadingState<Movie>>
 }

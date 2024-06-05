@@ -47,10 +47,11 @@ object Movies
 @Serializable
 data class MovieDetails(
     val isAdult: Boolean,
-    val posterPath: String,
-    val overview: String,
-    val backdropPath: String,
-    val title: String,
-    val voteAverage: String,
+    val posterPath: String? = "",
+    val overview: String? = "",
+    val releaseDate: String? = "",
+    val backdropPath: String? = "",
+    val title: String? = "",
+    val voteAverage: String? = "",
     val voteCount: Int
 )

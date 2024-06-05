@@ -1,7 +1,9 @@
 package com.engie.eea_tech_interview.model
 
+import androidx.compose.runtime.Immutable
 import com.google.gson.annotations.SerializedName
 
+@Immutable
 data class Movie(
     val id: Int,
     val adult: Boolean,

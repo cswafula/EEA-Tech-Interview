@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Search
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.engie.eea_tech_interview.R
+import com.engie.eea_tech_interview.model.Movie
 import com.engie.eea_tech_interview.model.mappers.toMovieNavigation
 import com.engie.eea_tech_interview.ui.widgets.CustomLoader
 import com.engie.eea_tech_interview.ui.widgets.ErrorHandleView
@@ -72,13 +74,17 @@ fun MoviesScreen(navigation: NavHostController) {
         viewModel.refreshPopularMoviesList()
     }
 
+    fun movieCardClicked(movie: Movie) {
+        navigation.navigate(movie.toMovieNavigation())
+    }
+
     Column(
         Modifier
             .fillMaxSize()
             .padding(10.dp)
     ) {
 
-        AnimatedVisibility (!showSearchView.value){
+        AnimatedVisibility(!showSearchView.value) {
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -114,19 +120,18 @@ fun MoviesScreen(navigation: NavHostController) {
                 .weight(1f),
             contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
-            
-            if(showSearchView.value){
-                items(searchMovieResults.value.size) { index ->
-                    MovieCard(searchMovieResults.value[index]) {
-                        navigation.navigate(it.toMovieNavigation())
-                    }
+            val movies = if (showSearchView.value) searchMovieResults.value else moviesList.value
+
+            items(
+                items = movies,
+                key = {
+                    it.id
                 }
-            }else{
-                items(moviesList.value.size) { index ->
-                    MovieCard(moviesList.value[index]) {
-                        navigation.navigate(it.toMovieNavigation())
-                    }
-                }
+            ) {
+                MovieCard(
+                    movie = it,
+                    onCardClicked = ::movieCardClicked
+                )
             }
 
         }

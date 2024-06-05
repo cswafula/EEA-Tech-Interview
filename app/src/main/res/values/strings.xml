@@ -7,5 +7,10 @@
     <string name="close">close</string>
     <string name="no_name">No Name</string>
     <string name="movie_rating">%s Rated</string>
+    <string name="movie_release_date">Release Date: %s</string>
+    <string name="movie_votes">%s Votes</string>
     <string name="search_movie">Search Movie</string>
+    <string name="back">back</string>
+    <string name="overview_label">Overview</string>
+    <string name="no_overview">Not Reviewed</string>
 </resources>
