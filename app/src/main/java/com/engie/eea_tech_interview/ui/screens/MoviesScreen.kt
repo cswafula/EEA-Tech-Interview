@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -82,11 +83,13 @@ fun MoviesScreen(navigation: NavHostController) {
         Modifier
             .fillMaxSize()
             .padding(10.dp)
+            .testTag("Main Column")
     ) {
 
         AnimatedVisibility(!showSearchView.value) {
             Row(
-                Modifier.fillMaxWidth(),
+                Modifier.fillMaxWidth()
+                    .testTag("Default Row"),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -117,7 +120,8 @@ fun MoviesScreen(navigation: NavHostController) {
             columns = GridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f),
+                .weight(1f)
+                .testTag("Grid Layout"),
             contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
             val movies = if (showSearchView.value) searchMovieResults.value else moviesList.value
@@ -154,7 +158,8 @@ fun SearchMoviesView(
     ) {
 
         Row(
-            Modifier.fillMaxWidth(),
+            Modifier.fillMaxWidth()
+                .testTag("Search Row"),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -166,6 +171,7 @@ fun SearchMoviesView(
                 modifier = Modifier
                     .size(25.dp)
                     .clickable(onClick = { cancelSearch() })
+                    .testTag("Cancel Icon")
             )
         }
 

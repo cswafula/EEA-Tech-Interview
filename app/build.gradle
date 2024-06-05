@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -44,6 +44,8 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
         }
     }
     namespace 'com.engie.eea_tech_interview'
@@ -70,7 +72,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     //koin DI
-    implementation "io.insert-koin:koin-android:3.2.0"
+    implementation "io.insert-koin:koin-android:3.3.2"
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
@@ -113,8 +115,36 @@ dependencies {
     //lottie animation
     implementation "com.airbnb.android:lottie-compose:6.0.0"
 
-
     //Compose tests
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.7")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
+
+    //Mockk
+    testImplementation "io.mockk:mockk:1.13.3"
+    androidTestImplementation "io.mockk:mockk-android:1.13.3"
+
+    //Navigation testing
+    androidTestImplementation "androidx.navigation:navigation-testing:2.7.7"
+
+    // Mockito core
+    testImplementation "org.mockito:mockito-core:4.6.1"
+
+    // Mockito inline
+    testImplementation "org.mockito:mockito-inline:4.6.1"
+
+    // Mockito Kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+
+    // Coroutines testing
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+
+    // Koin core
+    implementation "io.insert-koin:koin-core:3.4.0"
+
+    // Koin test
+    testImplementation "io.insert-koin:koin-test:3.4.0"
+
+    // Koin test with JUnit4
+    testImplementation "io.insert-koin:koin-test-junit4:3.4.0"
+
 }

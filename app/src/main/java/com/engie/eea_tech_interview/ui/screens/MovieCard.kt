@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +63,8 @@ fun MovieCard(movie: Movie, onCardClicked: (movie: Movie) -> Unit) {
             .clickable(indication = null,
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = { onCardClicked(movie) }
-            ),
+            )
+            .testTag("Movie Card"),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp

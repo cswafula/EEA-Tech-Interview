@@ -70,7 +70,7 @@ class MoviesViewModel() : BaseViewModel(), KoinComponent {
         getPopularMovies()
     }
 
-    private fun getPopularMovies() {
+    fun getPopularMovies() {
         viewModelScope.launch {
             uiState.value = LoadingState.ShowLoading(true)
 

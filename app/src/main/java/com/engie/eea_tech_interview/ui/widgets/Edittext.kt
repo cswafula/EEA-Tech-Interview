@@ -63,7 +63,8 @@ fun OutlinedSearchEditText(
             .testTag(label)
             .height(57.dp)
             .fillMaxWidth()
-            .onFocusChanged {},
+            .onFocusChanged {}
+            .testTag("Search Field"),
         keyboardOptions = keyboardOptions,
         label = {
             TextContent(
