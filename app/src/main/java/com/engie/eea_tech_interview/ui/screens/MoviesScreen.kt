@@ -12,12 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,7 +72,6 @@ fun MoviesScreen(navigation: NavHostController) {
 
     fun onCancelSearch() {
         showSearchView.value = false
-        viewModel.refreshPopularMoviesList()
     }
 
     fun movieCardClicked(movie: Movie) {
@@ -87,33 +86,59 @@ fun MoviesScreen(navigation: NavHostController) {
     ) {
 
         AnimatedVisibility(!showSearchView.value) {
-            Row(
-                Modifier.fillMaxWidth()
-                    .testTag("Default Row"),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Column {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .testTag("Default Row"),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-                TextTitle(title = stringResource(id = R.string.popular_movies))
+                    TextTitle(title = stringResource(id = R.string.popular_movies))
 
-                Icon(
-                    imageVector = Icons.Outlined.Search,
-                    contentDescription = "Search Icon",
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clickable(onClick = ::onSearchClicked)
+                    Icon(
+                        imageVector = Icons.Outlined.Search,
+                        contentDescription = "Search Icon",
+                        modifier = Modifier
+                            .size(25.dp)
+                            .clickable(onClick = ::onSearchClicked)
+                    )
+                }
+
+                PopularMoviesGridList(
+                    moviesList = moviesList,
+                    onCardClicked = ::movieCardClicked,
+                    loadNextPage = viewModel::getPopularMoviesNextPage
                 )
             }
         }
 
         AnimatedVisibility(visible = showSearchView.value) {
-            SearchMoviesView(
-                searchString = searchMovieText.value,
-                onSearchString = viewModel::onMovieSearch,
-                cancelSearch = ::onCancelSearch
-            )
+            Column {
+                SearchMoviesView(
+                    searchString = searchMovieText.value,
+                    onSearchString = viewModel::onMovieSearch,
+                    cancelSearch = ::onCancelSearch
+                )
+
+                SearchMoviesGridList(
+                    searchMovieResults = searchMovieResults,
+                    onCardClicked = ::movieCardClicked
+                )
+            }
         }
 
+
+    }
+}
+
+@Composable
+fun SearchMoviesGridList(
+    searchMovieResults: State<List<Movie>>,
+    onCardClicked: (movie: Movie) -> Unit
+) {
+    Column(Modifier.fillMaxWidth()) {
         VerticalSpacer()
 
         LazyVerticalGrid(
@@ -124,25 +149,52 @@ fun MoviesScreen(navigation: NavHostController) {
                 .testTag("Grid Layout"),
             contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
-            val movies = if (showSearchView.value) searchMovieResults.value else moviesList.value
 
-            items(
-                items = movies,
-                key = {
-                    it.id
-                }
-            ) {
+            items(searchMovieResults.value.size) { index ->
                 MovieCard(
-                    movie = it,
-                    onCardClicked = ::movieCardClicked
+                    movie = searchMovieResults.value[index],
+                    onCardClicked = { onCardClicked(it) }
                 )
             }
 
         }
-
-
     }
 }
+
+@Composable
+fun PopularMoviesGridList(
+    moviesList: State<List<Movie>>,
+    onCardClicked: (movie: Movie) -> Unit,
+    loadNextPage: () -> Unit
+) {
+
+    Column(Modifier.fillMaxWidth()) {
+        VerticalSpacer()
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .testTag("Grid Layout"),
+            contentPadding = PaddingValues(horizontal = 4.dp)
+        ) {
+
+            items(moviesList.value.size) { index ->
+                MovieCard(
+                    movie = moviesList.value[index],
+                    onCardClicked = { onCardClicked(it) }
+                )
+
+                if (index >= moviesList.value.size - 1) {
+                    loadNextPage()
+                }
+            }
+
+        }
+    }
+}
+
 
 @Composable
 fun SearchMoviesView(
@@ -158,7 +210,8 @@ fun SearchMoviesView(
     ) {
 
         Row(
-            Modifier.fillMaxWidth()
+            Modifier
+                .fillMaxWidth()
                 .testTag("Search Row"),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
