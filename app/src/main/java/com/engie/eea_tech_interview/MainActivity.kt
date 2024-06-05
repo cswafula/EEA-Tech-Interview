@@ -15,11 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private val retrofit: Retrofit by inject()
 
-    companion object {
-        const val MOVIE_API_KEY = "47304f18bd4a3b4e733196b18e68bfbc"
-        const val SEARCH_QUERY = "James Bond"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

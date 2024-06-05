@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.engie.eea_tech_interview.ui.screens.MovieDetailsScreen
 import com.engie.eea_tech_interview.ui.screens.MoviesScreen
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -45,5 +46,11 @@ object Movies
 
 @Serializable
 data class MovieDetails(
-    val movieName: String
+    val isAdult: Boolean,
+    val posterPath: String,
+    val overview: String,
+    val backdropPath: String,
+    val title: String,
+    val voteAverage: String,
+    val voteCount: Int
 )

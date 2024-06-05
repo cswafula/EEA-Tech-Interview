@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlinx-serialization'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -100,4 +101,16 @@ dependencies {
 
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+
+    //Icons
+    implementation("androidx.compose.material:material-icons-extended:1.6.7")
+
+    //Room caching DB
+    implementation "androidx.room:room-ktx:2.6.1"
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation "androidx.room:room-paging-guava:2.6.1"
+
+    //lottie animation
+    implementation "com.airbnb.android:lottie-compose:6.0.0"
+
 }

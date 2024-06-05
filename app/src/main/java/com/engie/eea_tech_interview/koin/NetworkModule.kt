@@ -1,5 +1,6 @@
 package com.engie.eea_tech_interview.koin
 
+import com.engie.eea_tech_interview.network.NetworkUtils
 import com.engie.eea_tech_interview.network.createGsonConverter
 import com.engie.eea_tech_interview.network.createOkHttpClient
 import com.engie.eea_tech_interview.network.createRetrofit
@@ -8,7 +9,7 @@ import org.koin.dsl.module
 
 val networkModule = module(createdAtStart = true) {
     single {
-        val baseUrl = "https://api.themoviedb.org/3/"
+        val baseUrl = NetworkUtils.BASE_URL
         createRetrofit(baseUrl, get(), get())
     }
 
